@@ -15,43 +15,68 @@ namespace DesafioProjetoHospedagem.Models
 
         public void CadastrarHospedes(List<Pessoa> hospedes)
         {
-            // TODO: Verificar se a capacidade é maior ou igual ao número de hóspedes sendo recebido
-            // *IMPLEMENTE AQUI*
-            if (true)
+            if (Suite.Capacidade >= hospedes.Count)
             {
                 Hospedes = hospedes;
+                Console.WriteLine("Cadastro realizado com sucesso");
             }
             else
             {
-                // TODO: Retornar uma exception caso a capacidade seja menor que o número de hóspedes recebido
-                // *IMPLEMENTE AQUI*
+                throw new Exception("Capacidade da Suite se encontra sendo menor que quantidade requisitada de hospedes.");
             }
         }
 
         public void CadastrarSuite(Suite suite)
         {
-            Suite = suite;
+            if (suite.Capacidade > 0 && suite.TipoSuite != null && suite.ValorDiaria > 0)
+            {
+                Suite = suite;
+                Console.WriteLine("Registro de Suite Realizado com sucesso");
+            }
+            else
+            {
+                throw new Exception("Um ou mais Campos possuem valores invalidos");
+            }
+            
         }
 
         public int ObterQuantidadeHospedes()
         {
-            // TODO: Retorna a quantidade de hóspedes (propriedade Hospedes)
-            // *IMPLEMENTE AQUI*
-            return 0;
+            return Hospedes.Count;
+        }
+
+        public void ListarHospedes()
+        {
+            if (Hospedes == null)
+            {
+                Console.WriteLine("Nao foi Cadastrado nenhum hospede");
+                return;
+            }
+
+            Console.Clear();
+            Console.WriteLine("=====================================");
+            Console.WriteLine("=============HOSPEDES================");
+            Console.WriteLine("=====================================");
+            Console.WriteLine($"Quantidade Total de Hospedes: {ObterQuantidadeHospedes()}");
+            Console.WriteLine("-------------------------------------");
+
+            for (int i = 0; i < Hospedes.Count; i++)
+            {
+
+                Console.WriteLine($"Hospede N°{i + 1}: {Hospedes[i].NomeCompleto}");
+
+            }
+            Console.WriteLine("=====================================");
         }
 
         public decimal CalcularValorDiaria()
         {
-            // TODO: Retorna o valor da diária
-            // Cálculo: DiasReservados X Suite.ValorDiaria
-            // *IMPLEMENTE AQUI*
-            decimal valor = 0;
+            decimal valor = DiasReservados * Suite.ValorDiaria;
 
-            // Regra: Caso os dias reservados forem maior ou igual a 10, conceder um desconto de 10%
-            // *IMPLEMENTE AQUI*
-            if (true)
+            if (DiasReservados >= 10)
             {
-                valor = 0;
+                Console.WriteLine("Chegou aqui");
+                valor = valor - (valor * (10M / 100M));
             }
 
             return valor;
